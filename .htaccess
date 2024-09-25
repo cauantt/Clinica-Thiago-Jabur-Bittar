@@ -1,0 +1,35 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Redirect HTTP_HOST condition for localhost instead of the live domain
+    RewriteCond %{HTTP_HOST} ^localhost [NC]
+    RewriteRule ^(.*)$ http://localhost/$1 [L,R=301]
+
+    # Ensure all requests use http for localhost
+    RewriteCond %{HTTPS} off
+    RewriteRule ^(.*)$ http://localhost/$1 [L,R=301]
+
+    # Custom rewrite rules for different sections of the site
+    RewriteRule ^home/?$ ?Secao= [NC,L]
+
+    RewriteRule ^exames/?$ ?Secao=exames [NC,L]
+    RewriteRule ^exames/teste-ergometrico/?$ ?Secao=exames&ex=teste-ergometrico [NC,L]
+    RewriteRule ^exames/mapa/?$ ?Secao=exames&ex=mapa [NC,L]
+    RewriteRule ^exames/eletrocardiograma/?$ ?Secao=exames&ex=eletrocardiograma [NC,L]
+    RewriteRule ^exames/holter/?$ ?Secao=exames&ex=holter [NC,L]
+    RewriteRule ^exames/tilt-test/?$ ?Secao=exames&ex=tilt-test [NC,L]
+    RewriteRule ^exames/raiox-digital/?$ ?Secao=exames&ex=raiox-digital [NC,L]
+    RewriteRule ^exames/metodosgraficos/?$ ?Secao=exames&ex=metodosgraficos [NC,L]
+    RewriteRule ^exames/ecocardiograma/?$ ?Secao=exames&ex=ecocardiograma [NC,L]
+    RewriteRule ^exames/ultrassom-ginecologico/?$ ?Secao=exames&ex=ultrassom-ginecologico [NC,L]
+    RewriteRule ^exames/ultrassom-vascular/?$ ?Secao=exames&ex=ultrassom-vascular [NC,L]
+    RewriteRule ^exames/ultrassomgeral/?$ ?Secao=exames&ex=ultrassomgeral [NC,L]
+    RewriteRule ^exames/mrpa/?$ ?Secao=exames&ex=mrpa [NC,L]
+
+    #Checks to see if the user is attempting to access a valid file,
+#such as an image or css document, if this isn't true it sends the
+#request to index.php
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond $1 !^(index\.php|images|robots\.txt|css)
+</IfModule>
